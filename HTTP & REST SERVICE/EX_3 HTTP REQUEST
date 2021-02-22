@@ -1,0 +1,12 @@
+﻿POST /knaevKMK/JS-Application/issues HTTP/1.1
+Host: github.com
+Authorization: Basic a25hZXZLTUs6dmFzdml0cmVzZTE=
+Content-Type: application/json
+Cookie: _gh_sess=3S1P2MWp0m%2B2hxWU%2FdfMmm%2B1zyrLlTs8m7hDYFcUsEvE%2F%2Bfv60D24aZtqqK1Z9Y%2FbnxCmuAaRE0Sqdj8XTD95ZGUpFNX%2BmkbtoAEUfx3AWu5oplwYfshpQP08RC%2B1tVbugF4FlJGN%2FKz4Rjr8nURsXyKXlg%2FvPgmMlC6589YL9BNfcm7s%2FrNVlqIeh%2Fm44E7XxMpeKiC2gbm3bSmaWrBQ6uHzJHwQBtmN2uk%2BzP7vWZorzEyLUSPHI4L1iUQvm9MvoQ3TrM3QTxpOqiqEekLHieK%2F9Huo6so4W6fE%2FIenbm0bVf1Un7S7E3YyYyuhh4ERfqrASCK02L%2FquIGKJu%2FYqWcHl1jW4ka--sTq49VKNA3ZrxuJx--Y2xPxy9MFoRDrRB%2BmPKOaQ%3D%3D
+Content-Length: 99
+
+{
+    "title":"I've created an issue",
+    "body": "Minor bug",
+    "labels": ["bug","minor"]
+}

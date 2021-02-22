@@ -1,0 +1,3 @@
+﻿GET /rest/v2/name/Bulgaria HTTP/1.1
+Host: restcountries.eu
+Cookie: __cfduid=d80692c4ea3612778a652d2bb6a9711581614027500
