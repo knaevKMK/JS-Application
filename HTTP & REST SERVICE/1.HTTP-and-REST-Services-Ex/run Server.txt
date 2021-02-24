@@ -1,0 +1,5 @@
+cmd
+cd: C:/Kanev/server
+node server.js
+
+use  http://localhost:3030/

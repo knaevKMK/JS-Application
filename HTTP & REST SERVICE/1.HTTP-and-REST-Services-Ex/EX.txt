@@ -1,0 +1,255 @@
+USE: use  http://localhost:3030/
+
+-Request line
+-Headers
+-Body (optional)
+-empty line (for end)
+
+
+EX_1.REST Countries
+
+https://restcountries.eu/rest/v2/name/Bulgaria
+HTTP:
+GET /rest/v2/name/Bulgaria HTTP/1.1
+Host: restcountries.eu
+
+
+//a GET request with the needed parameter to become response only with this information about the country:-	name, capital, region and population;//
+
+https://restcountries.eu/rest/v2/name/Italy?fields=name;capital;region;population
+HTTP:
+GET /rest/v2/name/Italy?fields=name;capital;region;population HTTP/1.1
+Host: restcountries.eu
+
+
+//German language. Send a GET request to become the information for these countries :-name ; region//
+
+https://restcountries.eu/rest/v2/lang/de?fields=name;region
+HTTP:
+GET /rest/v2/lang/de HTTP/1.1
+Host: restcountries.eu
+
+
+EX_2.Bus Stop
+http://localhost:3030/jsonstore/bus/businfo
+HTTP:
+GET /jsonstore/bus/businfo HTTP/1.1
+Host: localhost:3030
+
+http://localhost:3030/jsonstore/bus/businfo/1287
+HTTP:
+GET /jsonstore/bus/businfo/1287 HTTP/1.1
+Host: localhost:3030
+
+EX_3.	Phonebook GET
+
+http://localhost:3030/jsonstore/phonebook/phonebook
+HTTP:
+GET /jsonstore/phonebook/phonebook HTTP/1.1
+Host: localhost:3030
+
+
+EX_4.	Phonebook POST
+http://localhost:3030/jsonstore/phonebook/phonebook
+HTTP:
+POST /jsonstore/phonebook/phonebook HTTP/1.1
+Host: localhost:3030
+Content-Type: application/json
+Content-Length: 69
+
+{
+        "person": "Knev",
+        "phone": "+359-878-7777"
+    }
+//DELETE
+http://localhost:3030/jsonstore/phonebook/phonebook
+HTTP:
+DELETE /jsonstore/phonebook/phonebook HTTP/1.1
+Host: localhost:3030
+Content-Type: application/json
+Content-Length: 56
+
+{
+ "_id": "2f38b6f9-2644-41bd-8f3d-55c9e30dc880"
+    }
+
+EX_5.	Employees 
+http://dummy.restapiexample.com/api/v1/employees
+HTTP:
+GET /api/v1/employees HTTP/1.1
+Host: dummy.restapiexample.com
+
+
+
+http://dummy.restapiexample.com/api/v1/employee/1
+HTTP:
+GET /api/v1/employee/1 HTTP/1.1
+Host: dummy.restapiexample.com
+
+
+
+
+///post
+http://dummy.restapiexample.com/api/v1/create
+HTTP:
+POST /api/v1/create HTTP/1.1
+Host: dummy.restapiexample.com
+Content-Type: application/json
+Content-Length: 163
+
+{
+   "data": {
+               "employee_name": "Knev Knev",
+        "employee_salary": 800,
+        "employee_age": 37,
+        "profile_image": ""
+    } 
+}
+
+
+
+///put
+http://dummy.restapiexample.com/api/v1/update/21
+HTTP:
+PUT /api/v1/update/21 HTTP/1.1
+Host: dummy.restapiexample.com
+Content-Type: application/json
+Content-Length: 197
+
+{
+            "id": "21",
+            "employee_name": "Jenette Caldwell",
+            "employee_salary": "365000",
+            "employee_age": "32",
+            "profile_image": ""
+        }
+
+
+//delete
+http://dummy.restapiexample.com/api/v1/delete/21
+HTTP:
+DELETE /api/v1/delete/21 HTTP/1.1
+Host: dummy.restapiexample.com
+
+
+EX_6.	Firebase App
+
+
+POST /books.json HTTP/1.1
+Host: js-app-v01-default-rtdb.europe-west1.firebasedatabase.app
+Content-Type: application/json
+Content-Length: 98
+
+{
+    "Thrillers":[ {
+        "author": "Gillian Flynn",
+        "name": "Gone Girl"
+    }]
+}
+
+GET /books.json HTTP/1.1
+Host: js-app-v01-default-rtdb.europe-west1.firebasedatabase.app
+
+DELETE /books/-MUKTSAbxR_lFiMqPwso.json HTTP/1.1
+Host: js-app-v01-default-rtdb.europe-west1.firebasedatabase.app
+
+PUT /books/-MUKU0rj4Ze92F8qsh83.json HTTP/1.1
+Host: js-app-v01-default-rtdb.europe-west1.firebasedatabase.app
+Content-Type: application/json
+Content-Length: 133
+
+{"Romance": [
+            {
+                "author": "Colleen Hoover",
+                "name": "It Ends With Us"
+            }]}
+
+EX_7.	Backendless App
+
+
+//USE BACK_4_APP
+//POST HTTP:
+POST /classes/singer HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Content-Type: application/json
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+Content-Length: 68
+
+
+    {
+
+    "singer": "Eminem",
+    "title": "Cinderella Man"
+}
+
+
+// GET HTTP:
+GET /classes/singer/7BUaQzWaAp HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+
+//PUT HTTP:
+PUT /classes/singer/7BUaQzWaAp HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Content-Type: application/json
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+Content-Length: 64
+
+
+    {
+
+    "singer": "EminemS",
+    "title": "Fast Lane"
+}
+
+//DELETE HTTP:
+
+DELETE /classes/singer/7BUaQzWaAp HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+
+EX_8.	Back4App App
+
+//GET all 
+https://parseapi.back4app.com/classes/student
+HTTP:
+GET /classes/student HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+
+//GET 1
+https://parseapi.back4app.com/classes/student/4qItBiK3It
+HTTP:
+GET /classes/student/4qItBiK3It HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+
+///Post
+https://parseapi.back4app.com/classes/student
+HTTP:
+POST /classes/student HTTP/1.1
+Host: parseapi.back4app.com
+X-Parse-Application-Id: 3ha9GZSYigmP5tZ6CtxaoROfhaYU0ZxQkoE8Eur1
+X-Parse-REST-API-Key: kEN5mxP10ekT15ZBD0b2Dyg8C10tx1rPV7n3WkvA
+Content-Type: application/json
+Cookie: __cfduid=d238564f06698e6a58c055c5684da82901614171297
+Content-Length: 135
+
+ {
+         
+            "first_name": "Zhenya",
+            "last_name": "Ivanova",
+            "average_grade": "5.20"
+        }
