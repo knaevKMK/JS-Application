@@ -6,9 +6,6 @@ function loadRepos() {
     fetch(url)
         .then(promise => promise.json())
         .then(data => {
-            // result.textContent = '[';
-            // data.forEach(el => result.textContent += JSON.stringify(el));
-            // result.textContent += (']');
             result.textContent = JSON.stringify(data);
         })
 }
