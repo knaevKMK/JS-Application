@@ -22,20 +22,23 @@ function solve() {
         const promise = await fetch(url + currentStop.next);
         currentStop = await promise.json();
 
-        infoLable.textContent = `Next stop ${currentStop.name}`;
+        render(`Next stop ${currentStop.name}`);
         btnDepart.disabled = true;
         btnArive.disabled = false;
 
     }
 
     function arrive() {
-        infoLable.textContent = `Arriving at ${currentStop.name}`;
+        render(`Arriving at ${currentStop.name}`);
 
 
         btnDepart.disabled = false;
         btnArive.disabled = true;
     }
 
+    function render(text) {
+        infoLable.textContent = text;
+    }
     return {
         depart,
         arrive
