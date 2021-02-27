@@ -25,14 +25,14 @@ let renderQUEST = [{
         name: "Currnet Condition",
         url: 'http://localhost:3030/jsonstore/forecaster/today/',
         render: (data) => {
-            let div = _createTag('div', false, 'forecasts');
-            forecast.children[0].appendChild(div);
-            div.appendChild(_createTag('span', icon[data.forecast.condition], 'condition symbol'));
-            let spanF = _createTag('span', null, 'condition');
-            div.appendChild(spanF);
-            spanF.appendChild(_createTag('span', data.name, 'forecast-data'));
-            spanF.appendChild(_createTag('span', `${data.forecast.low}${icon.Degrees}/${data.forecast.high}${icon.Degrees}`, 'forecast-data'));
-            spanF.appendChild(_createTag('span', data.forecast.condition, 'forecast-data'));
+            forecast.children[0].appendChild(_createTag('div', false, 'forecasts', [
+                _createTag('span', icon[data.forecast.condition], 'condition symbol'),
+                _createTag('span', null, 'condition', [
+                    _createTag('span', data.name, 'forecast-data'),
+                    _createTag('span', `${data.forecast.low}${icon.Degrees}/${data.forecast.high}${icon.Degrees}`, 'forecast-data'),
+                    _createTag('span', data.forecast.condition, 'forecast-data')
+                ])
+            ]));
         }
     },
 
@@ -43,18 +43,18 @@ let renderQUEST = [{
             let div2 = _createTag('div', false, 'forecast-info');
             forecast.children[1].appendChild(div2);
             for (const day of data.forecast) {
-                console.log(day)
-                let span2F = _createTag('span', null, 'upcoming');
-                div2.appendChild(span2F);
-                span2F.appendChild(_createTag('span', icon[day.condition], 'symbol'));
-                span2F.appendChild(_createTag('span', `${day.low}${icon.Degrees}/${day.high}${icon.Degrees}`, 'forecast-data'));
-                span2F.appendChild(_createTag('span', day.condition, 'forecast-data'));
+                div2.appendChild(_createTag('span', null, 'upcoming', [
+                    _createTag('span', icon[day.condition], 'symbol'),
+                    _createTag('span', `${day.low}${icon.Degrees}/${day.high}${icon.Degrees}`, 'forecast-data'),
+                    _createTag('span', day.condition, 'forecast-data')
+                ]));
             }
         }
     }
 ];
-// create Tag template, with textContent and className
-function _createTag(type, text, clazz) {
+
+// create Tag template, with textContent and className + appendChild(Array)
+function _createTag(type, text, clazz, children) {
     let temp = document.createElement(type);
     if (text) {
         temp.textContent = text;
@@ -62,9 +62,14 @@ function _createTag(type, text, clazz) {
     if (clazz) {
         temp.className = clazz;
     }
+    if (children) {
+        children.forEach(child => temp.appendChild(child));
+    }
     return temp;
 }
 
+
+//display Error
 function displayError(text) {
     alert(text);
 }
@@ -103,7 +108,6 @@ async function onClick() {
         return;
     }
     if (forecast.children[0].children[1]) {
-        // forecast.style.display = 'none';
         forecast.children[0].children[1].remove();
         forecast.children[1].children[1].remove();
     }
