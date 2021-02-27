@@ -98,7 +98,7 @@ async function onClick() {
     }
     console.log(index)
 
-    if (!index && index !== 0) {
+    if (index === undefined) {
         displayError('Town not Found');
         return;
     }
