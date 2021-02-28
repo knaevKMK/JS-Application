@@ -21,9 +21,9 @@ async function _renderMore(tag) {
 
     // if tag is load 1st time it will not load again-> use 1st value
     if (tag.parentNode.parentNode.children[1].children[0].textContent !== `${tag.parentNode.children[0].textContent} .....`) {
-        //     return;
+        return;
     }
-    tag.parentNode.parentNode.children[1].style.display = 'block';
+
     try {
         const promise = await fetch('http://localhost:3030/jsonstore/advanced/articles/details/' + tag.id);
         tag.parentNode.parentNode.children[1].children[0].textContent = (await promise.json()).content;
@@ -66,5 +66,5 @@ function solution() {
                 break;
         }
     })
-
 }
+solution();
