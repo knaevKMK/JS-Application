@@ -81,6 +81,7 @@ function attachEvents() {
 }
 
 attachEvents();
+
 async function onClick() {
 
     if (!locations) {
