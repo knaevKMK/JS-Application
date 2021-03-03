@@ -39,7 +39,8 @@ async function onSubmit() {
         body
     });
     refresh();
-
+document.getElementsByName('author')[0].value='';
+document.getElementsByName('content')[0].value='';
 }
 
 function attachEvents() {
