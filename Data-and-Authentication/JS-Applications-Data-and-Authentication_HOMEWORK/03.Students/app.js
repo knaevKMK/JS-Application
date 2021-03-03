@@ -41,16 +41,16 @@ function _renderForm() {
     document.querySelector('#results').appendChild(_e('tfoot',
         `<tr><form id="form1">
     <td>
-    <input type = "text" id = "firstName" placeholder= "First Name..."pattern="[A-Z]{1}[a-z]{1,}" form="form1">
+    <input type = "text" id = "firstName" placeholder= "First Name..." form="form1">
     </td>
     <td>
-    <input type = "text" id = "lastName" placeholder= "Last Name..."  pattern="[A-Z]{1}[a-z]{1,}"  form="form1">
+    <input type = "text" id = "lastName" placeholder= "Last Name..."   form="form1">
     </td>
     <td>
-    <input type = "text" id = "facultyNumber" placeholder= "Faculty Number..."  pattern="[0-9]{3,22}"  form="form1">
+    <input type = "text" id = "facultyNumber" placeholder= "Faculty Number..."    form="form1">
     </td>
     <td>
-    <input type = "text" id = "grade" placeholder= "Grade..."  pattern="[2-6]{1}\.*[0-9]{0,2}" form="form1">
+    <input type = "text" id = "grade" placeholder= "Grade..."  form="form1">
     </td>
     <td>
     <button  id = "btnCretate" type="submit" class="button" form="form1">Submit</button>
@@ -67,28 +67,44 @@ function _onLoad() {
     let form = document.getElementById('form1');
     form.addEventListener('submit', async(e) => {
         e.preventDefault();
-        console.log('Submit');
+        //   console.log('Submit');
 
         let formData = new FormData(form);
-        for (const input of[...document.getElementsByTagName('input')]) {
-            //   console.log(input.id)
-            if (input.value.trim() === '') {
-                alert(`Bad input data of ${input.placeholder}`)
-                return;
+        try {
+            for (const input of[...document.getElementsByTagName('input')]) {
+                //   console.log(input.id)
+                if (input.value.trim() === '') {
+                    throw new Error(input.placeholder)
+                }
+                switch (input.id) {
+                    case 'grade':
+                        let temp = Number(input.value)
+                        if (isNaN(temp) || temp < 2 || temp > 6) {
+                            throw Error(input.placeholder + ' field accept values 2.00 to 6.00');
+                        }
+                        formData[input.id] = Number(input.value);
+                        break;
+                    case 'facultyNumber':
+                        if (!input.value.match('[0-9]{3,20}')) {
+                            throw new Error(input.placeholder + ' filed must include 3to 20 digits');
+                        }
+                    default:
+                        formData[input.id] = input.value.substring(0, 1).toUpperCase() + input.value.substring(1);
+                        break
+                }
             }
-            if (input.id === 'grade') {
-                formData[input.id] = Number(input.value);
-                continue;
-            }
-            formData[input.id] = input.value
-        }
+            const body = JSON.stringify(formData);
+            const newStudent = await _sendRequest(url, {
+                method: "post",
+                headeres: { 'Content-Type': 'application/json' },
+                body
+            });
+            console.log(newStudent);
+        } catch (er) {
+            console.log(er)
+            alert(`Bad input data!\n${er}`)
 
-        const body = JSON.stringify(formData);
-        const newStudent = await _sendRequest(url, {
-            method: "post",
-            headeres: { 'Content-Type': 'application/json' },
-            body
-        });
+        }
         _renderTable();
     });
 
