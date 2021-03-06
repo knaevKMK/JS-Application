@@ -101,7 +101,11 @@ async function onSubmitC() {
     let _body = [...formData.entries()].reduce((p, [k, v]) => Object.assign(p, {
         [k]: v
     }), {});
-    _body._dateCreated = `${new Date(Date.now()).toISOString()}`;
+
+    if (_body.username.trim() === '' || _body.postText.trim() === '') {
+        return alert('Empty fields');
+    }
+    _body._dateCreated = `${JSON.stringify(new Date()).substring(1, 20).replace('T', ' ')}`;
     _body.likes = [];
 
     await _Request('http://localhost:3030/jsonstore/collections/myboard/comments/' + id, {

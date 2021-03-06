@@ -8,7 +8,7 @@ sessionStorage.setItem('isCleared', false)
 
 
 async function main() {
-    onMain();
+    //onMain();
     sessionStorage.setItem('isCleared', false);
 
     document.querySelector('nav > ul > li > a').addEventListener('click', onMain);
