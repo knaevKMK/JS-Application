@@ -51,7 +51,13 @@ table tfoot tr:nth-child {
     border-bottom: 1px solid black;
 }
 
-table tfoot tr td .button {
+table tfoot tr td #btnCretate {
+    size: 100px;
     background: #234465;
     color: white;
+}
+
+table tfoot th {
+    text-decoration: underline;
+    text-align: right;
 }

@@ -16,8 +16,7 @@ async function _renderTable() {
         .forEach(student => {
             //console.log(student)
             document.querySelector('tbody').appendChild(_e('tr',
-                `
-            <td>${student.firstName}</td>
+                `<td>${student.firstName}</td>
             <td>${student.lastName}</td>
             <td>${student.facultyNumber}</td>
             <td>${Number(student.grade).toFixed(2)}</td>
@@ -39,7 +38,11 @@ async function _delete() {
 
 function _renderForm() {
     document.querySelector('#results').appendChild(_e('tfoot',
-        `<tr><form id="form1">
+        `<tr>
+        <th></th>
+            <th><h3>FORM</h3></th>
+            </tr>
+        <tr><form id="form1">
     <td>
     <input type = "text" id = "firstName" placeholder= "First Name..." form="form1">
     </td>
@@ -52,11 +55,15 @@ function _renderForm() {
     <td>
     <input type = "text" id = "grade" placeholder= "Grade..."  form="form1">
     </td>
+    </tr>
+    <tr>
+    <td></td>
+    <td></td>
+    <td></td>
     <td>
-    <button  id = "btnCretate" type="submit" class="button" form="form1">Submit</button>
+    <input  id = "btnCretate" type="submit" class="button" value="Submit" form="form1">
     </td>
     </form></tr>`,
-
     ))
 }
 
@@ -100,6 +107,7 @@ function _onLoad() {
                 body
             });
             console.log(newStudent);
+            form.reset();
         } catch (er) {
             console.log(er)
             alert(`Bad input data!\n${er}`)
