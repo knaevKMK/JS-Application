@@ -8,35 +8,47 @@ let shape = document.querySelector('#catches');
 let formSubmit = document.querySelector('aside');
 
 
+function activeteBtn() {
+    document.querySelectorAll('button').forEach(btn => {
+        if (btn.className != 'load' && btn.className != 'add' &&
+            (sessionStorage.getItem('_id') === btn.parentNode.children[0].textContent)) {
+            btn.disabled = false;
+        }
+
+    });
+}
+
+
 function attachEvents() {
-    if (token == null) {
-        window.location.pathname = 'login.html';
-    }
+    // if (token == null) {
+    //     window.location.pathname = 'login.html';
+    // }
 
 
 
     if (isLoged) {
         _load();
-        document.getElementById('guest').innerHTML = `<a href= "index.html" class="active">LogOut</a>`
+        document.querySelector('.add').disabled = false;
+        document.getElementById('guest').innerHTML = `<a src="_logOut" class="active">LogOut</a>`
 
     } else {
-        window.location.pathname = 'login.html';
+        // window.location.pathname = 'login.html';
         document.getElementById('guest').innerHTML = `<a href= "login.html" class="active">Login</a>`
     }
 
-
     window.addEventListener('click', (e) => {
+        if (e.target.textContent == 'LogOut') {
+            _logOut();
 
+        }
         if (e.target.tagName === 'BUTTON') {
             try {
                 switch (e.target.className) {
                     case 'update':
                         console.log("Update")
-
                         _update(e.target.parentNode);
                         break;
                     case 'delete':
-
                         _delete(e.target.parentNode)
                         break;
                     case 'load':
@@ -48,6 +60,7 @@ function attachEvents() {
                         break;
 
                 }
+
             } catch (err) {
                 alert(err.message)
             }
@@ -56,6 +69,12 @@ function attachEvents() {
     })
 }
 
+function _logOut() {
+    sessionStorage.clear();
+    window.location.pathname = 'index.html';
+
+    attachEvents();
+}
 async function _create(form) {
 
     let inputs = form.querySelectorAll('input');
@@ -157,7 +176,7 @@ async function _delete(row) {
 
 
 attachEvents();
-_load();
+// _load();
 
 async function _load() {
     const data = await _request(url);
@@ -190,11 +209,7 @@ async function _load() {
             <button  disabled class="delete">Delete</button>
             `, _catch._id));
     }
-    document.querySelectorAll('button').forEach(btn => {
-
-        btn.disabled = false;
-
-    });
+    activeteBtn();
 }
 async function _request(url, options) {
     try {
