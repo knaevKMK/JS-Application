@@ -1,0 +1,14 @@
+{
+    "name": "01.Messenger",
+    "version": "1.0.0",
+    "description": "test HomeWork",
+    "main": "index.js",
+    "directories": {
+        "test": "test"
+    },
+    "scripts": {
+        "test": "mocha test"
+    },
+    "author": "knev",
+    "license": "ISC"
+}

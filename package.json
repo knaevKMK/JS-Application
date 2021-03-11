@@ -1,0 +1,30 @@
+{
+    "name": "js-application",
+    "version": "1.0.0",
+    "description": "learn JS app",
+    "main": "index.js",
+    "directories": {
+        "test": "tests"
+    },
+    "scripts": {
+        "test": "mocha tests"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/knaevKMK/JS-Application.git"
+    },
+    "author": "knev",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/knaevKMK/JS-Application/issues"
+    },
+    "homepage": "https://github.com/knaevKMK/JS-Application#readme",
+    "dependencies": {
+        "chai": "^4.3.3",
+        "mocha": "^8.3.1"
+    },
+    "devDependencies": {
+        "lite-server": "^2.6.1",
+        "playwright-chromium": "^1.9.2"
+    }
+}
