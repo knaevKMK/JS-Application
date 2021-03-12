@@ -14,4 +14,5 @@ function onSubmit() {
     render(html `<ul></ul>`, document.querySelector('#root'));
     render(result['towns'].split(', ')
         .map((town) => html `<li>${town}</li>`), document.querySelector('#root > ul'));
+    form.reset();
 }
