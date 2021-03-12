@@ -12,27 +12,30 @@ async function _loadOptions() {
         `), document.querySelector('#menu'));
 
 }
+// documentation nothing say about the second input field "values"
 
-render(html `
-<label for="itemText">
-Text:
-</label>
-<input type="text" id="itemText" />
-<label for="itemText">
-Value:
-</label>
-<input type="text" id="itemValue" />
-<input type="submit" value="Add">
-`, document.querySelector('form'));
+// render(html `
+// <label for="itemText">
+// Text:
+// </label>
+// <input type="text" id="itemText" />
+// <label for="itemText">
+// Value:
+// </label>
+// <input type="text" id="itemValue" />
+// <input type="submit" value="Add">
+// `, form);
 
 _loadOptions();
 
-document.querySelector('form').addEventListener('submit', addItem);
+form.addEventListener('submit', addItem);
 async function addItem() {
     event.preventDefault();
-    console.log(document.querySelector('form'))
-        //   let formData = new FormData(document.querySelector('form'));
-
+    //console.log(form);
+    // let formData = new FormData(form);
+    // console.log([...formData.entries()].reduce((p, [k, v]) => Object.assign({
+    //     [k]: v
+    // }), {}))
     let result = await json(url, {
         method: 'post',
         headers: {
