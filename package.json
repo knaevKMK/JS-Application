@@ -21,6 +21,7 @@
     "homepage": "https://github.com/knaevKMK/JS-Application#readme",
     "dependencies": {
         "chai": "^4.3.3",
+        "lit-html": "^1.3.0",
         "mocha": "^8.3.1"
     },
     "devDependencies": {
