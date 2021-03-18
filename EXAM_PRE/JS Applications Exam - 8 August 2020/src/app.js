@@ -10,11 +10,11 @@ import { logOut } from "./views/logout.js";
 import { loadAddMovie } from "./views/addMovie.js";
 import { loadDetails } from "./views/detailsMovie.js";
 import { loadDelete } from "./views/delete.js";
-
-import * as api from './api/data.js'
 import { loadEdit } from "./views/editMovie.js";
 import { loadLike } from "./views/like.js";
-import { loadSearch } from "./views/search.js";
+
+import * as api from './api/data.js'
+
 const body = document.querySelector('#container ');
 window.api = api;
 
@@ -28,7 +28,7 @@ page('/details/:id', loadData, loadDetails);
 page('/delete/:id', loadData, loadDelete);
 page('/edit/:id', loadData, loadEdit);
 page('/like/:id', loadData, loadLike);
-page('/?search=:id', loadData, loadSearch)
+
 
 
 page.start();
