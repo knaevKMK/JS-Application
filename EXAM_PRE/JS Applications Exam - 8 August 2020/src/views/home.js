@@ -2,7 +2,7 @@ import { html } from "../../node_modules/lit-html/lit-html.js";
 import { getMovies } from '../api/data.js'
 import page from '../../node_modules/page/page.mjs';
 
-const homeTemp = (films, onsubmit) => html `
+const homeTemp = (films, onsubmit, search) => html `
 <div class="jumbotron jumbotron-fluid text-light" style="background-color: #343a40;">
 <img src="https://s.studiobinder.com/wp-content/uploads/2019/06/Best-M-Night-Shyamalan-Movies-and-Directing-Style-StudioBinder.jpg" class="img-fluid" alt="Responsive image">
 <h1 class="display-4">Movies</h1>
@@ -16,7 +16,7 @@ ${sessionStorage.getItem('email') == null
 <a href="/create" class="btn btn-warning ">Add Movie</a>
 <form @submit =${onsubmit} class="search float-right">
     <label>Search: </label>
-    <input type="text">
+    <input type="text" value=${search ? search : ''}>
     <input type="submit" class="btn btn-info" value="Search">
 </form>
 </section>
@@ -43,17 +43,19 @@ ${films.length == 0
 `;
 
 
-export async function loadHome(ctx,) {
-    console.log("on home")
-    const films = await getMovies();
+export async function loadHome(ctx) {
+    const regex = ctx.querystring.split('=')[1];
+
+    const films = await getMovies(regex);
     console.log(films);
-    ctx.render(homeTemp(films, onsubmit));
+    ctx.render(homeTemp(films, onsubmit, regex));
 
 
     async function onsubmit() {
         event.preventDefault();
         const text = document.querySelector('form').children[1].value.trim();
-        page.redirect(`/search/${text}`)
+        page.redirect(`/?search=${text}`)
+
 
     }
 }

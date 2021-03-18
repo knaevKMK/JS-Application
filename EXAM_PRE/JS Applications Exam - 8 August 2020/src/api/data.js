@@ -7,8 +7,15 @@ export const register = api.register;
 export const logout = api.logout;
 
 
-export async function getMovies() {
-    return await api.get(host + 'data/movies')
+export async function getMovies(query) {
+    if (query) {
+        console.log(query)
+        return await api.get(host + 'data/movies?where=' + encodeURIComponent(`title LIKE "${query}"`))
+
+    } else {
+        return await api.get(host + 'data/movies')
+
+    }
 }
 export async function getMovieById(id) {
     return await api.get(host + 'data/movies/' + id);
@@ -21,6 +28,8 @@ export async function getCommentsByRecipeId(id) {
     }
     return await api.get(host + `data/likes?where=_movieId%3D%22${id}%22`)
 }
+
+
 export async function createLike(movieId) {
     return await api.post(host + 'data/likes', { _movieId: movieId });
 }

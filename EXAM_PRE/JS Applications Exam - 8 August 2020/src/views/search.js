@@ -31,17 +31,13 @@ ${films.length == 0
 export async function loadSearch(ctx) {
     let regex = ctx.params.id
     console.log(regex);
-    const allMovies = await getMovies();
 
-    let result = allMovies
-        .filter(m => {
-            return m.description.includes(regex) || m.title.includes(regex);
-        });
-    console.log(result)
+
+
+
     ctx.render(tempLoading());
 
-
-    setTimeout(() => {
-        ctx.render(tempSearch(result));
-    }, 1000);
+    // setTimeout(() => {
+    //     ctx.render(tempSearch(result));
+    // }, 1000);
 }

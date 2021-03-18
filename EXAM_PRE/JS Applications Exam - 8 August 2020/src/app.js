@@ -28,7 +28,7 @@ page('/details/:id', loadData, loadDetails);
 page('/delete/:id', loadData, loadDelete);
 page('/edit/:id', loadData, loadEdit);
 page('/like/:id', loadData, loadLike);
-page('/search/:id', loadData, loadSearch)
+page('/?search=:id', loadData, loadSearch)
 
 
 page.start();
