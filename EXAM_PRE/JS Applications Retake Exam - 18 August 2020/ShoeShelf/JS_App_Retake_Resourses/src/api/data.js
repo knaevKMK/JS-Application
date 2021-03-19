@@ -7,55 +7,58 @@ export const register = api.register;
 export const logout = api.logout;
 
 
-export async function getShoes(query) {
-    // if (query) {
-    //     console.log(query)
-    //     return await api.get(host + 'jsonstore/shoes?where=' + encodeURIComponent(`title LIKE "${query}"`))
 
-    // } else {
-    return await api.get(host + 'jsonstore/shoes')
+//createRecord
+//work
+export async function createRecord(data) {
 
-    // }
-}
-export async function getMovieById(id) {
-    return await api.get(host + 'data/movies/' + id);
-}
-
-export async function getCommentsByRecipeId(id) {
-    const userId = sessionStorage.getItem('id');
-    if (userId == null) {
-        return;
-    }
-    return await api.get(host + `jsonstore/shoes/catalog/likes?where=_id%3D%22${id}%22`)
+    await (await fetch('http://localhost:3030/jsonstore/shoes', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })).json();
 }
 
 //use for get all data
-
+//work
 export async function getCatalog() {
-    return await (await fetch(host + `jsonstore/shoes/catalog`)).json();
+    const data = await (await fetch(host + `jsonstore/shoes/`)).json();
+    let result = [];
+    Object.keys(data).forEach(key => result.push(data[key]));
+    return result;
 }
 
-
+// get by item Id
+//work
 export async function getShoeById(itemId) {
-    const catalog = await getCatalog();
-    return catalog.find(i => i._id == itemId);
-}
-////////////////////
-
-export async function createLike(movieId) {
-    return await api.post(host + 'data/likes', { _movieId: movieId });
-}
-export async function createRecord(data) {
-    return await api.post(host + 'data/movies', data);
+    return await (await fetch(host + `jsonstore/shoes/` + itemId)).json();
 }
 
-export async function editRecord(id, data) {
-    return await api.put(host + 'data/movies/' + id, data);
-}
 
+//DELETE RECEORD
+//WORK
 export async function deleteRecord(id) {
-    return await api.del(host + 'jsonstore/shoes/catalog' + id)
+    return await api.del(host + 'jsonstore/shoes/' + id)
 }
+
+
+//edit by item Id
+// work
+export async function editShoe(itemId, data) {
+    const token = sessionStorage.getItem('token');
+    console.log(itemId);
+    console.log(data);
+    return await (await fetch(`http://localhost:3030/jsonstore/shoes/${itemId}`, {
+        method: "put",
+        headers: {
+            "Content-Type": "application/json",
+            // 'X-Authorization': token
+        },
+        body: JSON.stringify(data)
+    })).json()
+}
+
+
 
 export function getFormData(form) {
     // console.log(form)

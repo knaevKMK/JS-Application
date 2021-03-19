@@ -3,16 +3,19 @@ import { getCatalog } from '../api/data.js'
 
 const tempHome = (email, catalog) => html `<main>
     ${email
-    ? html` <div class="shoes">
+        ? html` <div class="shoes">
         ${catalog.length > 0
-            ? catalog.map(item => html`<div class="shoe">
+            ? catalog
+            .sort((a, b) => b.bought - a.bought)
+            .map(item => html`
+        <div class="shoe">
             <img src=${item.img}>
             <h3>${item.brand} ${item.name}</h3>
-            <a href="/details/${item._id}">Buy it for ${item.price}</a>
+            <a href="/details/${item._id}">Buy it for ${item.price} $</a>
         </div>`)
-        : html`<h1>No shoes to display. Be the first to create a new offer...</h1>`}
+                : html`<h1>No shoes to display. Be the first to create a new offer...</h1>`}
     </div>`
-: html`<div class="container">
+            : html`<div class="container">
         <div class="about-us">
             <div>
                 <img src="../public/shoes.jpg" alt="">

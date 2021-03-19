@@ -1,6 +1,6 @@
 {
-  "catalog": [
-    {
+
+  "28172817-c69f-4bc2-9c58-e6efeda532da": {
       "_id": "28172817-c69f-4bc2-9c58-e6efeda532da",
       "brand": "Nike",
       "name": "Pegasus",
@@ -10,7 +10,7 @@
       "bought": 0,
       "description": "New shoe for tenis"
     },
-    {
+  "28172817-c69f-4bc2-9c58-e6efeda564da":  {
       "_id": "28172817-c69f-4bc2-9c58-e6efeda564da",
       "brand": "Adidas",
       "name": "Falcon",
@@ -20,7 +20,7 @@
       "bought": 0,
       "description": "New shoe for basketball"
     },
-    {
+  "23172817-c69f-4bc2-9c58-e6efeda564da":   {
       "_id": "23172817-c69f-4bc2-9c58-e6efeda564da",
       "brand": "Under Armour",
       "name": "HOVR",
@@ -30,7 +30,7 @@
       "bought": 0,
       "description": "New shoe for run"
     },
-    {
+  "28172817-c69f-4bc2-9c54-e6efeda564da": {
       "_id": "28172817-c69f-4bc2-9c54-e6efeda564da",
       "brand": "Reebok",
       "name": "Nano-9",
@@ -40,7 +40,7 @@
       "bought": 0,
       "description": "New shoe for walk"
     },
-    {
+  "28172817-c69f-4bc2-5c58-e6efeda564da":   {
       "_id": "28172817-c69f-4bc2-5c58-e6efeda564da",
       "brand": "Asics",
       "name": "Gel-Quantum",
@@ -50,6 +50,7 @@
       "bought": 0,
       "description": "New shoe for footbal"
     }
-  ]
+
 }
+
 

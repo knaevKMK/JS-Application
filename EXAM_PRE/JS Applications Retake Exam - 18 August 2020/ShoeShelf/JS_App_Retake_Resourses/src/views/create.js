@@ -1,5 +1,6 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 import page from '../../node_modules/page/page.mjs';
+import { createRecord } from "../api/data.js";
 
 const createTemp = (onSubmit) => html `<main>
     <h1>Create New Offer</h1>
@@ -42,11 +43,7 @@ export function loadCreate(ctx) {
         }
         console.log(data)
 
-        const response = await (await fetch('http://localhost:3030/jsonstore/shoes/catalog', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })).json();
+        const response = createRecord(data);
         console.log(response)
 
         ctx.render(tempSuccess());

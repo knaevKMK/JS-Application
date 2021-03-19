@@ -1,12 +1,21 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 import page from '../../node_modules/page/page.mjs';
-import { getCatalog } from "../api/data.js";
+import { editShoe, getCatalog, getShoeById } from "../api/data.js";
+import { detailsTemp } from "./details.js";
 
 
 
-export function loadBuy(ctx) {
+export async function loadBuy(ctx) {
+
     const itemId = ctx.params.id;
-    ctx.render(tempSuccess());
+    const data = await getShoeById(itemId);
+
+    console.log(data.bought);
+    data.bought++;
+    console.log(data.bought);
+    const buyIt = await editShoe(itemId, data);
+    console.log(buyIt)
+    ctx.render(detailsTemp(buyIt, true));
     setTimeout(() => {
         page.redirect(`/details/${itemId}`)
     }, 1000);

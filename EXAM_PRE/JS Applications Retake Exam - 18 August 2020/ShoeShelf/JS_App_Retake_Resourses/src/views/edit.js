@@ -1,6 +1,8 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
 import page from '../../node_modules/page/page.mjs';
-import { getCatalog, getShoeById } from "../api/data.js";
+import { editShoe, getShoeById } from "../api/data.js";
+
+
 const editTemp = (onSubmit, item) => html `<h1>Edit Offer</h1>
 <p class="message"></p>
 <form @submit=${onSubmit}>
@@ -39,18 +41,14 @@ export async function loadEdit(ctx) {
             img: event.target.children[2].children[0].value.trim(),
             description: event.target.children[4].children[0].value.trim(),
             brand: event.target.children[4].children[0].value.trim(),
-            creator: sessionStorage.getItem('id'),
+            _creatorId: sessionStorage.getItem('id'),
         }
         console.log(data)
 
-        const response = await (await fetch('http://localhost:3030/jsonstore/shoes/catalog', {
-            method: 'put',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(data)
-        })).json();
+        const response = await editShoe(itemId, data);
         console.log(response)
 
-        ctx.render(tempSuccess());
+        ctx.render(tempSuccess(response, true));
         setTimeout(() => {
             page.redirect('/')
         }, 1000);
