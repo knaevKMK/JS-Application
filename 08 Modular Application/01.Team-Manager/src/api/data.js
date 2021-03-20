@@ -35,13 +35,22 @@ export async function createTeam(data) {
 export async function getTeamById(teamId) {
     return await (await fetch(host + `data/teams/` + teamId)).json();
 }
+export async function getMembers(teamIds) {
+    const query = encodeURIComponent(`team IN ("${teamIds.join('", "')}") AND status="member"`)
+    return await (await fetch(host +
+        `data/members?where=${query}`)).json();
+}
+export async function getRequestByTeamId(teamId) {
+    return await (await fetch(host + `/data/members?where=teamId%3D%22${teamId}%22&load=use%3D_ownerId%3Ausers`)).json();
+}
 export async function getAllMembersInTeamById(teamId) {
     return await (await fetch(host +
-        `data/members?where=teamId%3D%22${teamId}%22`)).json();
+        `data/members?where=teamId%3D%22${teamId}%22%20AND%20status%3D%22member%22 &load=user%3DuserId%3Ausers`)).json();
 }
 
 //•	Request to join a team (body contains teamId):
 export async function sendJoin(data) {
+    const token = sessionStorage.getItem('token');
     return await (await fetch(host + `data/members`, {
         method: 'post',
         headers: {
@@ -51,7 +60,30 @@ export async function sendJoin(data) {
         body: JSON.stringify(data)
     })).json();
 }
-
+//•	Aprove join a team request (body contains teamId):
+export async function acceptJoin(data) {
+    const _data = Object.assign({}, data, { status: 'member' });
+    const token = sessionStorage.getItem('token');
+    return await (await fetch(host + `data/members/` + data._id, {
+        method: 'put',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token
+        },
+        body: JSON.stringify(_data)
+    })).json();
+}
+//•	Delete join a team request (body contains teamId):
+export async function rejectJoin(id) {
+    const token = sessionStorage.getItem('token');
+    return await (await fetch(host + `data/members/` + id, {
+        method: 'delete',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Authorization': token
+        }
+    })).json();
+}
 //•	Reject membership request / leave team / remove member:
 export async function deleteMemberFromTeam(requestId) {
     return await api.del(host + 'data/members/' + requestId)
