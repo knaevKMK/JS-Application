@@ -34,10 +34,9 @@ export async function deleteIdea(id) {
     return await api.del(host + '/ideas/' + id)
 }
 export async function getUserIdeas(user_id) {
-
     return await api.get(host + `/ideas?query={"_acl.creator":"${user_id}"}`)
 }
-export async function commentIdea(idea_id, body) {
+export async function editIdea(idea_id, body) {
     const userId = sessionStorage.getItem('id');
     if (userId == null) {
         return;

@@ -11,11 +11,13 @@ import { loadError, loadSuccess } from './views/elements/modal.js';
 import { loadCreate } from './views/create.js';
 import { loadDetails } from './views/details.js';
 import { loadProfile } from './views/profile.js';
+import { loadEdit } from './views/edit.js';
+
 
 const body = document.querySelector('body');
 page('/index.html', loadData, loadHome);
 page('/', loadData, loadHome);
-page('/edit/:id', loadData, loadHome);
+page('/edit/:id', loadData, loadEdit);
 page('/dashboard', loadData, loadHome);
 page('/profile', loadData, loadProfile);
 page('/details/:id', loadData, loadDetails);

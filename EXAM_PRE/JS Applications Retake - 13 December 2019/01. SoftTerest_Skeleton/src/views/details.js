@@ -1,5 +1,5 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import { getFormData, getIdeaById, deleteIdea, commentIdea } from "../api/data.js";
+import { getFormData, getIdeaById, deleteIdea, editIdea } from "../api/data.js";
 import { loadSuccess, loadError } from "./elements/modal.js";
 import page from '../../node_modules/page/page.mjs';
 
@@ -22,7 +22,7 @@ const tempDetails = (onDelete, onComment, onLike, idea) => html `
     ${sessionStorage.getItem('email') == idea.creator
             ? html` <div class="text-center">
         <a @click=${onDelete} id="delete" class="btn detb" href="javascript:void(0)">Delete</a>
-        <a  id="delete" class="btn detb" href="/edit/${idea._id}">Delete</a>
+        <a  id="delete" class="btn detb" href="/edit/${idea._id}">Edit</a>
     </div>`
             : html`<form @submit=${onComment} class="text-center" method="" action="">
         <textarea class="textarea-det" name="newComment" id=""></textarea>
@@ -82,7 +82,7 @@ export async function loadDetails(ctx) {
         }   ;
          data.comments.push(body)
         try{
-            const response = await commentIdea(ideaId,data);
+            const response = await editIdea(ideaId,data);
             renderSuccess(loadSuccess('Idea was comment successfully.'), page.redirect('/details/'+ideaId));
         }catch(err){
         console.log(err);
@@ -94,8 +94,8 @@ export async function loadDetails(ctx) {
         console.log('Like');
          data.likes++;
         try{
-            const response = await commentIdea(ideaId,data);
-            renderSuccess(loadSuccess('Idea was Like successfully.'), page.redirect('/'));
+            const response = await editIdea(ideaId,data);
+            renderSuccess(loadSuccess('Idea was Like successfully.'), page.redirect('/details/'+ideaId));
         }catch(err){
         console.log(err);
         renderSuccess(loadError('Something went wrong!'),page.redirect('/'));
