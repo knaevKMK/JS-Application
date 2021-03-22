@@ -15,8 +15,9 @@ import { loadProfile } from './views/profile.js';
 const body = document.querySelector('body');
 page('/index.html', loadData, loadHome);
 page('/', loadData, loadHome);
+page('/dashboard', loadData, loadHome);
 page('/profile', loadData, loadProfile);
-page('/details', loadData, loadDetails);
+page('/details/:id', loadData, loadDetails);
 page('/create', loadData, loadCreate);
 page('/login', loadData, loadLogin);
 page('/register', loadData, loadRegister);
@@ -44,11 +45,6 @@ body.addEventListener('click', async() => {
                 }, 1000);
             }
             break;
-        case 'delete':
-            console.log("delete");
-            break;
-        case 'lik':
-            console.log("like");
-            break;
+
     }
 })

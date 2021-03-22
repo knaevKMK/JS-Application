@@ -8,14 +8,29 @@ export const register = api.register;
 export const logout = api.logout;
 
 //===================================================
+
+//Work all Ideas
 export async function getAllIdeas() {
     return await api.get(host + '/ideas');
 }
-
-export async function getMovieById(id) {
-    return await api.get(host + 'data/movies/' + id);
+//Work a Idea
+export async function getIdeaById(id) {
+    return await api.get(host + '/ideas/' + id);
 }
+//Work Create Idea
+export async function createIdea(body) {
+    return await api.post(host + '/ideas/', body);
+}
+export async function deleteIdea(id) {
+    return await api.del(host + '/ideas/' + id)
+}
+export async function getUserIdeas(user_id) {
 
+    return await api.get(host + `/ideas?query={"_acl.creator":"${user_id}"}`)
+}
+//
+//END
+//==================================================================
 export async function getCommentsByRecipeId(id) {
     const userId = sessionStorage.getItem('id');
     if (userId == null) {
@@ -36,9 +51,7 @@ export async function editRecord(id, data) {
     return await api.put(host + 'data/movies/' + id, data);
 }
 
-export async function deleteRecord(id) {
-    return await api.del(host + 'data/movies/' + id)
-}
+
 
 export function getFormData(form) {
     // console.log(form)

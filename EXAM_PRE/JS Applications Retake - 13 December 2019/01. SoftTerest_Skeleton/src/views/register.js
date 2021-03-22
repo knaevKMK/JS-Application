@@ -75,7 +75,7 @@ export function loadRegister(ctx) {
         // event.target.reset();
         ctx.render(loadSuccess('Register successful!'));
         setTimeout(() => {
-            page.redirect('/');
+            page.redirect('/dashboard');
         }, 1000);
     }
 }

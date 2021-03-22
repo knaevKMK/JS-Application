@@ -1,5 +1,5 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
-import { getFormData } from "../api/data.js";
+import { getFormData, createIdea } from "../api/data.js";
 import { loadError, loadSuccess } from "./elements/modal.js";
 import page from '../../node_modules/page/page.mjs';
 
@@ -49,9 +49,11 @@ export function loadCreate(ctx) {
         //         description: "sadas"
         // imageURL: "asda"
         // title: "sada"
-
-        if (fD.title.trim() == '' || fD.imageURL.trim() == '' || fD.description == '') {
-            ctx.render(loadSuccess(`Invalid:${fD.title.trim() == '' ? ' Title' : ''}${fD.imageURL.trim() == '' ? ' Image Url' : ''} ${fD.description == '' ? ' Description' : ''}`));
+        const description = fD.description.trim();
+        const img = fD.imageURL.trim();
+        const title = fD.title.trim()
+        if (description == '' || img == '' || title == '') {
+            ctx.render(loadError('Something went wrong!'));
             setTimeout(() => {
                 ctx.render(tempCreate(onSubmit));
             }, 1000);
@@ -60,7 +62,15 @@ export function loadCreate(ctx) {
 
         try {
             //TODO post
-            //const response = await
+            const response = await createIdea({
+                "name": title,
+                "likes": 0,
+                "description": description,
+                "img": img,
+                "comments": [],
+                "creator": sessionStorage.getItem('email')
+            })
+            console.log(response);
 
         } catch (err) {
             ctx.render(loadError('Something went wrong!'));
@@ -69,7 +79,7 @@ export function loadCreate(ctx) {
             }, 1000);
 
         }
-        ctx.render(loadError(`Idea create successfully!`));
+        ctx.render(loadSuccess(`Idea create successfully!`));
         setTimeout(() => {
             page.redirect('/')
         }, 1000);

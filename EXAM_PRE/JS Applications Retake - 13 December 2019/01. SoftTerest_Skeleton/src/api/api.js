@@ -32,7 +32,7 @@ function getOptions(method, body) {
     };
 
     const token = sessionStorage.getItem('token');
-    console.log(token)
+    // console.log(token)
     if (token != null) {
         options.headers['Authorization'] = `Kinvey ${token}`;
     }

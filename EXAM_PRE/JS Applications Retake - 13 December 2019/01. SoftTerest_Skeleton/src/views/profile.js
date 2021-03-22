@@ -1,20 +1,36 @@
 import { html } from "../../node_modules/lit-html/lit-html.js";
+import { getUserIdeas } from '../api/data.js';
 
-const tempProfile = () => html `<div class="container home wrapper  my-md-5 pl-md-5">
+const tempProfile = (data) => html `<div class="container home wrapper  my-md-5 pl-md-5">
     <div class="profile home-text col-md-6 text-center col-lg">
         <img class="profile-img" src="./images/user.png" />
         <div class="profile-info">
-            <p>Username: <small>${sessionStorage.getItem('email')}</small></p>
-            <p class="infoType">Has 2 ideas =)</p>
-            <p>Dinner Recipe</p>
-            <p>4 easy DIY ideas to try!</p>
-            <p>No ideas yet</p>
+            <p>Username: <small>${data.name}</small></p>
+            ${renderIdeas(data.ideas)}
         </div>
     </div>
 </div>`;
 
+function renderIdeas(ideas) {
+    if (ideas.lenght == 0) {
+        return html `<p>No ideas yet</p>`;
+    }
+    return html `<p class="infoType">Has ${ideas.length} idea${ideas.length > 1 ? 's' : ''} =)</p>
+${ideas.map(i => html` <p>${i.name}</p>`)}`
+}
+
 export async function loadProfile(ctx) {
     console.log('Profile');
 
-    ctx.render(tempProfile());
+    const id = sessionStorage.getItem('id');
+    if (id == null) {
+        return;
+    }
+    const myIdes = await getUserIdeas(id);
+    let data = {
+        name: sessionStorage.getItem('email'),
+        ideas: myIdes
+    };
+
+    ctx.render(tempProfile(data));
 }

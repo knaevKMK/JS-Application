@@ -4,7 +4,7 @@ import { html } from "../../../node_modules/lit-html/lit-html.js";
 
 const tempHeader = (logged) => html `<nav class="navbar navbar-expand-lg navbar-light bg-light ">
     <div class="container">
-        <a href="/" class="navbar-brand" href="">
+        <a class="navbar-brand" href=${sessionStorage.getItem('email') !=null ? `/profile` : '/'}>
             <img src="./images/idea.png" alt="">
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive"
@@ -15,7 +15,7 @@ const tempHeader = (logged) => html `<nav class="navbar navbar-expand-lg navbar-
             <ul class="navbar-nav ml-auto">
                 ${logged
             ? html` <li class="nav-item active">
-                    <a href="/home" class="nav-link" href="">Dashboard</a>
+                    <a href="/dashboard" class="nav-link" href="">Dashboard</a>
                 </li>
                 <li class="nav-item active">
                     <a href="/create" class="nav-link" href="">Create</a>

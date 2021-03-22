@@ -65,7 +65,7 @@ export function loadLogin(ctx) {
         }
         ctx.render(loadSuccess('Login successful!'));
         setTimeout(() => {
-            page.redirect('/');
+            page.redirect('/dashboard');
         }, 1000);
 
     }
