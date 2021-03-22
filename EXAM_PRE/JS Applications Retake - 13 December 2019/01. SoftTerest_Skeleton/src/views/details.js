@@ -1,9 +1,9 @@
 import { html, render } from "../../node_modules/lit-html/lit-html.js";
-import { getFormData, getIdeaById, deleteIdea } from "../api/data.js";
+import { getFormData, getIdeaById, deleteIdea, commentIdea } from "../api/data.js";
 import { loadSuccess, loadError } from "./elements/modal.js";
 import page from '../../node_modules/page/page.mjs';
 
-const tempDetails = (onDelete, onComment, idea) => html `
+const tempDetails = (onDelete, onComment, onLike, idea) => html `
 <div class="container home some">
     <img class="det-img" src="${idea.img}" />
     <div class="desc">
@@ -22,11 +22,12 @@ const tempDetails = (onDelete, onComment, idea) => html `
     ${sessionStorage.getItem('email') == idea.creator
             ? html` <div class="text-center">
         <a @click=${onDelete} id="delete" class="btn detb" href="javascript:void(0)">Delete</a>
+        <a  id="delete" class="btn detb" href="/edit/${idea._id}">Delete</a>
     </div>`
             : html`<form @submit=${onComment} class="text-center" method="" action="">
         <textarea class="textarea-det" name="newComment" id=""></textarea>
         <button type="submit" class="btn detb">Comment</button>
-        <a id="like" class="btn detb" href="javascript:void(0)">Like</a>
+        <a @click=${onLike} id="like" class="btn detb" href="javascript:void(0)">Like</a>
     </form>`}
 </div>`;
 
@@ -38,37 +39,69 @@ function renderComments(comments) {
     }
     return comments.map(com => html`<li class="comment">${com.owner}: ${com.text}</li>`);
 }
+
 export async function loadDetails(ctx) {
     console.log('Details');
     const ideaId = ctx.params.id;
     const data = await getIdeaById(ideaId);
-    ctx.render(tempDetails(onDelete,onComment, data));
+    ctx.render(tempDetails(onDelete,onComment,onLike, data));
 
-    async function onComment() {
-        event.preventDefault();
-        console.log('Comment');
-        const fd = getFormData(event.target);
-        console.log(fd);
-        //TODO send comment and reload page
-
+    function  renderSuccess(loadTo,to) {
+        ctx.render(loadTo);
+        setTimeout(() => {
+          to;
+        }, 1000);
     }
+
     async function onDelete(){
         console.log('delete')
         try{
             console.log(ideaId)
             const response= await deleteIdea(ideaId);
             console.log(response);
-            ctx.render(loadSuccess('Idea deleted successfully.'));
-            setTimeout(() => {
-               page.redirect('/');
-            }, 1000);
+          renderSuccess(loadSuccess('Idea deleted successfully.'),page.redirect('/'));
         }catch(err){
             console.log(err)
-            ctx.render(loadError('Something went wrong!'));
-            setTimeout(() => {
-                ctx.render(tempDetails(onDelete,onComment, data));
-            }, 1000);
-
+            renderSuccess(loadError('Something went wrong!'), page.redirect('/'));
         }
     }
+
+    async function onComment() {
+        event.preventDefault();
+        console.log('Comment');
+        const fd = getFormData(event.target);
+        console.log(fd);
+
+        if(fd.newComment.trim()==''){
+            return
+        }
+
+        let body = {
+            owner:sessionStorage.getItem('email'),
+        text: fd.newComment.trim()
+        }   ;
+         data.comments.push(body)
+        try{
+            const response = await commentIdea(ideaId,data);
+            renderSuccess(loadSuccess('Idea was comment successfully.'), page.redirect('/details/'+ideaId));
+        }catch(err){
+        console.log(err);
+        renderSuccess(loadError('Something went wrong!'), page.redirect('/'));
+        }
+    }
+    async function onLike() {
+        event.preventDefault();
+        console.log('Like');
+         data.likes++;
+        try{
+            const response = await commentIdea(ideaId,data);
+            renderSuccess(loadSuccess('Idea was Like successfully.'), page.redirect('/'));
+        }catch(err){
+        console.log(err);
+        renderSuccess(loadError('Something went wrong!'),page.redirect('/'));
+        }
+
+    }
+
+
 }

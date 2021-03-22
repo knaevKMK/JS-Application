@@ -15,6 +15,7 @@ import { loadProfile } from './views/profile.js';
 const body = document.querySelector('body');
 page('/index.html', loadData, loadHome);
 page('/', loadData, loadHome);
+page('/edit/:id', loadData, loadHome);
 page('/dashboard', loadData, loadHome);
 page('/profile', loadData, loadProfile);
 page('/details/:id', loadData, loadDetails);
