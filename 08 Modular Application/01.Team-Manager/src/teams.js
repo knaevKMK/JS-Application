@@ -1,5 +1,8 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
+import { until } from '../node_modules/lit-html/directives/until.js';
+import {} from '../node_modules/lit-html/directives/style-map.js'
 import { getCatalog, getMemberCountOfTeam } from './api/data.js';
+import { loadModal } from './views/loading.js';
 
 const tempTeams = (data) => html `<main>
     <section id="browse">
@@ -41,5 +44,5 @@ export  const tempArt = (data) => {
 export async function loadTeams(ctx) {
     const data = await getCatalog();
 
-    ctx.render( tempTeams(data));
+    ctx.render(until(tempTeams(data), html`<p>Loading...</p>`));
 }

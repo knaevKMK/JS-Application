@@ -27,7 +27,7 @@ export async function loadCreate(ctx) {
         const formData = getFormData(event.target);
         const response = await createTeam(formData);
         console.log(response);
-        ctx.render(tempSuccess('created team'))
+        ctx.render(tempSuccess('created'))
         setTimeout(() => {
             page.redirect('/teams')
         }, 1000);
