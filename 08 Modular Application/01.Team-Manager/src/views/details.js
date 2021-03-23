@@ -1,7 +1,7 @@
 import { html } from '../../node_modules/lit-html/lit-html.js';
 import page from '../../node_modules/page/page.mjs';
 import { getTeamById, sendJoin } from '../api/data.js';
-
+import { tempLoading } from '../views/loading.js';
 
 const tempDetails = (onJoin, data) => html `<main>
     <section id="team-home">
@@ -73,6 +73,7 @@ function getMember(data) {
     //         });
 }
 export async function loadDetails(ctx) {
+    ctx.render(tempLoading('Loading...'));
     const teamId = ctx.params.id;
     const team = await getTeamById(teamId);
 

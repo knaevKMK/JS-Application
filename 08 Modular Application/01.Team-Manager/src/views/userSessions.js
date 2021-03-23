@@ -61,12 +61,17 @@ export async function loadLogin(ctx) {
             ctx.render(tempLogin(onSubmit, true))
             return;
         }
-        const response = await login(email, password);
-        console.log(response);
-        ctx.render(tempSuccess('login'));
-        setTimeout(() => {
-            page.redirect('/myteams')
-        }, 1000);
+        ctx.render(tempLoading('Login...'));
+        try {
+            const response = await login(email, password);
+            console.log(response);
+            ctx.render(tempSuccess('login'));
+            setTimeout(() => {
+                page.redirect('/myteams')
+            }, 1000);
+        } catch (err) {
+            ctx.render(tempLogin(onSubmit, true));
+        }
     }
 }
 export async function loadRegister(ctx) {
@@ -74,7 +79,6 @@ export async function loadRegister(ctx) {
 
     async function onSubmit() {
         event.preventDefault();
-
         const formData = getFormData(event.target);
         console.log(formData);
 
@@ -92,21 +96,34 @@ export async function loadRegister(ctx) {
             ctx.render(tempRegister(onSubmit, false, true, true, false))
             return;
         }
+        ctx.render(tempLoading('Registering...'));
+        try {
+            const response = await register(email, password, username);
+            console.log(response);
+            ctx.render(tempSuccess("registration"));
+            setTimeout(() => {
+                page.redirect('/myteams')
+            }, 1000);
 
-        const response = await register(email, password, username);
-        console.log(response);
-        ctx.render(tempSuccess("registration"));
-        setTimeout(() => {
-            page.redirect('/myteams')
-        }, 1000);
+        } catch (err) {
+            ctx.render(tempRegister(onSubmit, false, true, true, false))
+
+        }
     }
 }
 
 export async function loadLogout() {
-    const data = await logout();
-    console.log(data);
-    render([loadHead(), tempSuccess('logout'), loadFoot()], document.querySelector('main'));
-    setTimeout(() => {
-        page.redirect('/')
-    }, 1000);
+    render([loadHead(), tempLoading('Logout...'), loadFoot()], document.querySelector('main'));
+    try {
+        const data = await logout();
+        console.log(data);
+        render([loadHead(), tempSuccess('logout'), loadFoot()], document.querySelector('main'));
+    } catch (err) {
+        render([loadHead(), tempSuccess('!!!Bad request!!!'), loadFoot()], document.querySelector('main'));
+    } finally {
+        setTimeout(() => {
+            page.redirect('/')
+        }, 1000);
+
+    }
 }

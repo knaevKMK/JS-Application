@@ -1,8 +1,8 @@
-import { html } from '../../node_modules/lit-html/lit-html.js';
+import { html } from '../node_modules/lit-html/lit-html.js';
+// import{}from '../node_modules/lit-html/directives';
 import { until } from '../node_modules/lit-html/directives/until.js';
-import {} from '../node_modules/lit-html/directives/style-map.js'
-import { getCatalog, getMemberCountOfTeam } from './api/data.js';
-import { loadModal } from './views/loading.js';
+import { getCatalog } from './api/data.js';
+import { loadModal, tempLoading } from './views/loading.js';
 
 const tempTeams = (data) => html `<main>
     <section id="browse">
@@ -18,7 +18,6 @@ const tempTeams = (data) => html `<main>
         ${ tempArt(data)}
     </section>
 </main>`;
-
 
 export  const tempArt = (data) => {
     console.log(data);
@@ -42,7 +41,7 @@ export  const tempArt = (data) => {
 }
 
 export async function loadTeams(ctx) {
+    ctx.render(tempLoading('Loading...'));
     const data = await getCatalog();
-
-    ctx.render(until(tempTeams(data), html`<p>Loading...</p>`));
+    ctx.render( tempTeams(data));
 }

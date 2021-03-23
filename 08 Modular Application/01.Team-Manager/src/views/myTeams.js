@@ -3,6 +3,7 @@ import page from '../../node_modules/page/page.mjs';
 import { tempLoading, tempSuccess } from './loading.js';
 import { tempArt } from '../teams.js';
 import { getOwnTeams } from '../api/data.js';
+import { until } from '../../node_modules/lit-html/directives/until.js';
 
 const tempMyTeams = (data) => html `<main>
     <section id="my-teams">
@@ -26,11 +27,10 @@ const tempMyTeams = (data) => html `<main>
 </main>`;
 
 export async function loadMyTeams(ctx) {
-
+    // ctx.render(tempLoading('Loading...'));
     const userId = sessionStorage.getItem('id');
-
     const data =await getOwnTeams(userId);
 
-console.log(data)
-    ctx.render(tempMyTeams(data));
+    // ctx.render(tempMyTeams(data));
+    ctx.render(until(tempMyTeams(data),tempLoading('Loading...')));
 }

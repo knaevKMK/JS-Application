@@ -2,6 +2,7 @@ import { html } from "../../node_modules/lit-html/lit-html.js";
 import { editTeam, getFormData, getTeamById } from "../api/data.js";
 import { tempLoading, tempSuccess } from './loading.js';
 import page from '../../node_modules/page/page.mjs';
+import { until } from '../../node_modules/lit-html/directives/until.js';
 
 const tempEdit = (onSubmit, team, err) => html `<main>
     <section id="edit">
@@ -21,9 +22,11 @@ const tempEdit = (onSubmit, team, err) => html `<main>
 </main>`;
 
 export async function loadEdit(ctx) {
+    // ctx.render(tempLoading('Loading...'));
     const teamId = ctx.params.id;
     const team = await getTeamById(teamId);
-    ctx.render(tempEdit(onSubmit, team));
+    ctx.render(until(tempEdit(onSubmit, team), tempLoading('Loading...')));
+    // ctx.render(tempEdit(onSubmit, team));
 
     async function onSubmit() {
         event.preventDefault();
@@ -35,6 +38,7 @@ export async function loadEdit(ctx) {
             ctx.render(tempEdit(onSubmit, team, true));
             return;
         }
+        ctx.render(tempLoading('Edit current team...'));
         const response = await editTeam(teamId, fData);
         console.log(response)
         ctx.render(tempSuccess('edited'))

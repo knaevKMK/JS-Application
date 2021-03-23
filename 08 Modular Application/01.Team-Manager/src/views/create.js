@@ -2,6 +2,7 @@ import { html } from '../../node_modules/lit-html/lit-html.js';
 import { createTeam, getFormData } from '../api/data.js';
 import page from '../../node_modules/page/page.mjs';
 import { tempSuccess } from './loading.js';
+import { tempLoading } from '../views/loading.js';
 
 const tempCreate = (onSubmit, err) => html `<main>
     <section id="create">
@@ -25,6 +26,8 @@ export async function loadCreate(ctx) {
     async function onSubmit() {
         event.preventDefault();
         const formData = getFormData(event.target);
+
+        ctx.render(tempLoading('Creating...'));
         const response = await createTeam(formData);
         console.log(response);
         ctx.render(tempSuccess('created'))
