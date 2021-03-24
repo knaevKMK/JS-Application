@@ -1,0 +1,156 @@
+import { html } from '../../node_modules/lit-html/lit-html.js'; import page from '../../node_modules/page/page.mjs'; import { getFormData, login } from '../api/data.js'; import { tempError, tempInfo, tempLoading } from './notification.js'; const tempCreate
+= (onSubmit) => html `
+<section id="createSongView">
+    <div class="background-spotify">
+        <div class="song-container">
+            <h1>Create new song</h1>
+            <form @submit=${onSubmit} action="" method="">
+                <div class="form-group">
+                    <label for="title" class="white-labels">Title</label>
+                    <input id="title" type="text" name="title" class="form-control" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="artist" class="white-labels">Artist</label>
+                    <input id="artist" type="text" name="artist" class="form-control" placeholder="Artist">
+                </div>
+                <div class="form-group">
+                    <label for="imageURL" class="white-labels">imageURL</label>
+                    <input id="imageURL" type="text" name="imageURL" class="form-control" placeholder="imageURL">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</section>`; export function loadCreate(ctx) { ctx.render(tempCreate(onSubmit)); async function onSubmit() { event.preventDefault(); const fd = getFormData(event.target); console.log(fd); } } <button type="submit" class="btn btn-primary">Register</button>
+</form>
+<h4 class="mt-3 text-white">Already have an account? <a href="#" class="add-link">Login</a></h4>
+</div>
+</div>
+</section> -->
+
+<section id="homeView">
+    <img class="m-auto background-image" width="100%" src="http://gomera24.com/wp-content/uploads/2017/06/566771.jpg">
+</section>
+
+<!-- <section id="allSongsView">
+    <div class="background-spotify">
+        <div class="song-container">
+            <h1>All Songs</h1>
+            <a href="#">
+                <button type="button" class="btn-lg btn-block new-song-btn">Add a new song</button>
+            </a>
+            <div class="song">
+                <h5>Title: When The Sun Goes Down</h5>
+                <h5>Artist: Zeni N, The Distance, Igi</h5>
+                <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51MGXCdrUpL._SS500.jpg" />
+                <p>Likes: 100; Listened 1500 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 100</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+            <div class="song">
+                <h5>Title: Insomnia 2.0 (Avicci Remix)</h5>
+                <h5>Artist: Faithless, Avicci</h5>
+                <img class="cover" src="https://static.qobuz.com/images/covers/58/22/0886445392258_600.jpg" />
+                <p>Likes: 2000; Listened 100000 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 2000</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+            <div class="song">
+                <h5>Title: Coffee Shop</h5>
+                <h5>Artist: Sunnery James & Ryan Marciano</h5>
+                <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51RO-2AhZEL._SS500.jpg" />
+                <p>Likes: 1234; Listened 5000 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 1234</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<!-- <section id="createSongView">
+    <div class="background-spotify">
+        <div class="song-container">
+            <h1>Create new song</h1>
+            <form action="" method="">
+                <div class="form-group">
+                    <label for="title" class="white-labels">Title</label>
+                    <input id="title" type="text" name="title" class="form-control" placeholder="Title">
+                </div>
+                <div class="form-group">
+                    <label for="artist" class="white-labels">Artist</label>
+                    <input id="artist" type="text" name="artist" class="form-control" placeholder="Artist">
+                </div>
+                <div class="form-group">
+                    <label for="imageURL" class="white-labels">imageURL</label>
+                    <input id="imageURL" type="text" name="imageURL" class="form-control" placeholder="imageURL">
+                </div>
+                <button type="submit" class="btn btn-primary">Create</button>
+            </form>
+        </div>
+    </div>
+</section> -->
+
+<section id="mySongsView">
+    <div class="background-spotify">
+        <div class="song-container">
+            <h1>My Songs</h1>
+            <div class="song">
+                <h5>Title: When The Sun Goes Down</h5>
+                <h5>Artist: Zeni N, The Distance, Igi</h5>
+                <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51MGXCdrUpL._SS500.jpg" />
+                <p>Likes: 100; Listened 1500 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 100</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+            <div class="song">
+                <h5>Title: Insomnia 2.0 (Avicci Remix)</h5>
+                <h5>Artist: Faithless, Avicci</h5>
+                <img class="cover" src="https://static.qobuz.com/images/covers/58/22/0886445392258_600.jpg" />
+                <p>Likes: 2000; Listened 100000 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 2000</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+            <div class="song">
+                <h5>Title: Coffee Shop</h5>
+                <h5>Artist: Sunnery James & Ryan Marciano</h5>
+                <img class="cover" src="https://images-na.ssl-images-amazon.com/images/I/51RO-2AhZEL._SS500.jpg" />
+                <p>Likes: 1234; Listened 5000 times</p>
+                <a href="#"><button type="button" class="btn btn-danger mt-4">Remove</button></a>
+                <a href="#"><button type="button" class="btn btn-success mt-4">Listen</button></a>
+                <p>Likes: 1234</p>
+                <a href="#"><button type="button" class="btn btn-primary mt-4">Like</button></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- <footer class="card-footer text-muted d-flex justify-content-center">
+            &copy; SoftUni JS Core Apps Exams
+        </footer> -->
+</div>
+
+<!-- <div id="notifications">
+        <div id="loadingBox" class="notification">
+            <span>Loading …</span>
+        </div>
+        <div id="infoBox" class="notification">
+            <span>Info</span>
+        </div>
+        <div id="errorBox" class="notification">
+            <span>Error</span>
+        </div>
+    </div> -->
+
+</body>
+
+</html>
