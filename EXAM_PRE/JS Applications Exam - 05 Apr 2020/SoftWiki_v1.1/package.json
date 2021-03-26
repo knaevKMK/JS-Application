@@ -1,0 +1,21 @@
+{
+  "name": "exam",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "handlebars": "^4.7.3",
+    "jquery": "^3.4.1",
+    "sammy": "^0.7.6"
+  },
+  "devDependencies": {
+    "lit-html": "^1.3.0",
+    "page": "^1.11.6"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "keywords": [],
+  "description": ""
+}
