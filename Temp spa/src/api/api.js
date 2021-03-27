@@ -16,7 +16,7 @@ async function request(url, options) {
             return response;
         }
     } catch (err) {
-        alert(err.message);
+        console.log(err.message);
         throw err;
     }
 }
@@ -53,26 +53,29 @@ export async function del(url) {
     return await request(url, getOptions('delete'));
 }
 
+
+function _setSession(response) {
+    sessionStorage.setItem('token', response.accessToken);
+    sessionStorage.setItem('email', response.email);
+    sessionStorage.setItem('id', response._id);
+    sessionStorage.setItem('gender', response.gender);
+    sessionStorage.setItem('username', response.username);
+}
 export async function login(email, password) {
 
     const response = await post(settings.host + 'users/login', { email, password });
-    sessionStorage.setItem('token', response.accessToken);
-    sessionStorage.setItem('email', response.email);
-    sessionStorage.setItem('id', response._id);
+    _setSession(response);
     return response;
 }
-export async function register(email, password) {
-    const response = await post(settings.host + 'users/register', { email, password });
-    sessionStorage.setItem('token', response.accessToken);
-    sessionStorage.setItem('email', response.email);
-    sessionStorage.setItem('id', response._id);
+
+export async function register(username, email, password, gender) {
+    const response = await post(settings.host + 'users/register', { username, email, password, gender });
+    _setSession(response);
     return response;
 }
 
 export async function logout() {
     const response = await get(settings.host + 'users/logout');
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('email');
-    sessionStorage.removeItem('id');
+    sessionStorage.clear();
     return response;
 }

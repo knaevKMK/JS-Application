@@ -21,10 +21,10 @@
     "homepage": "https://github.com/knaevKMK/JS-Application#readme",
     "dependencies": {
         "chai": "^4.3.3",
-        "lit-html": "^1.3.0",
         "mocha": "^8.3.1"
     },
     "devDependencies": {
+        "lit-html": "^1.3.0",
         "lite-html": "^0.2.4",
         "lite-server": "^2.6.1",
         "page": "^1.11.6",

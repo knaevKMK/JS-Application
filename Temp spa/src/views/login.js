@@ -1,43 +1,35 @@
-import { html } from "../../node_modules/lit-html/lit-html.js";
-import { getFormData, login } from "../api/data.js";
-import page from '../../node_modules/page/page.mjs';
+import { lp, api } from '../lib.js';
+import { note } from './elements/note.js';
 
-const loginTemp = (onSubmit) => html `<form @submit=${onSubmit} class="text-center border border-light p-5" action="" method="">
-<div class="form-group">
-    <label for="email">Email</label>
-    <input type="email" class="form-control" placeholder="Email" name="email" value="">
-</div>
-<div class="form-group">
-    <label for="password">Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="password" value="">
-</div>
 
-<button type="submit" class="btn btn-primary">Login</button>
-</form>`;
-const tempLoged = () => html `
-<div class="form-group" style="display: inline-flexbox; background-color:lightgreen;">
-<h3 style="color: white; text-decoration:white underline;text-align: center;">Logged in successfully</h3>
-</div>
-`;
-export function loadLogin(ctx) {
-    ctx.render(loginTemp(onSubmit));
+//TODO attach submit
+const tempLogin = (onSubmit) => lp.html ``;
+
+
+
+export function pageLogin(ctx) {
+    ctx.render(tempLogin(onSubmit));
 
 
     async function onSubmit() {
         event.preventDefault();
-        const data = getFormData(event.target);
-        const email = data.email.trim();
-        const password = data.password.trim();
-        if (email == '' || password == '') {
+        const fd = api.data.getFormData(event.target);
+        console.log(fd);
+        // Check fields name
+        const email = fd.email.trim();
+        const password = fd.password.trim();
 
+        if (email == '' || password == '') {
+            note('All fields required');
             return;
         }
-        const response = await login(email, password);
-        ctx.render(tempLoged());
-        setTimeout(() => {
-            page.redirect('/')
-        }, 1000);
-
-
+        try {
+            await api.data.login(email, password);
+            //check redirect
+            lp.page.redirect('/catalog');
+        } catch (err) {
+            note(err.message);
+            return
+        }
     }
 }

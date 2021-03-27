@@ -1,60 +1,36 @@
-import { html } from "../../node_modules/lit-html/lit-html.js";
-import { getFormData, register } from "../api/data.js";
-import page from '../../node_modules/page/page.mjs';
+import { lp, api } from '../lib.js';
+import { note } from './elements/note.js';
 
+//attach submit
+const tempRegister = (onSubmit) => lp.html ``;
 
-const regTemp = (onSubmit, email, pass, rePass) => html `
-<form @submit=${onSubmit} class="text-center border border-light p-5" action="" method="">
-<div class="form-group">
-    <label for="email">Email${email ? ' does not match' : ''}</label>
-    <input type="email" class="form-control" placeholder="Email" name="email" value="">
-</div>
-<div class="form-group">
-    <label for="password">Password${pass ? ' does not match' : ''}</label>
-    <input type="password" class="form-control" placeholder="Password" name="password" value="">
-</div>
-
-<div class="form-group">
-    <label for="repeatPassword">Repeat Password ${rePass ? ' does not match' : ''}</label>
-    <input type="password" class="form-control" placeholder="Repeat-Password" name="repeatPassword" value="">
-</div>
-
-<button type="submit" class="btn btn-primary">Register</button>
-</form>`;
-const tempRegisterLogged = () => html `
-<div class="form-group" style="display: inline-flexbox; background-color:lightgreen;">
-<h3 style="color: white; text-decoration:white underline;text-align: center;">Successful registration!</h3>
-</div>
-`;
-export function loadRegister(ctx) {
-    ctx.render(regTemp(onSubmit));
-
-
+export function pageRegister(ctx) {
+    ctx.render(tempRegister(onSubmit));
     async function onSubmit() {
         event.preventDefault();
-        const data = getFormData(event.target);
-        const email = data.email.trim();
-        const password = data.password.trim();
-        const rePassword = data.repeatPassword.trim();
-        if (email == '' || password == '') {
-            ctx.render(regTemp(onSubmit,
-                email == '',
-                password == '',
-                rePassword == ''
-            ));
-            return;
-        }
-        if (password !== rePassword) {
-            ctx.render(regTemp(onSubmit,
-                true, false, false
-            ));
-            return;
-        }
-        const response = await register(email, password);
 
-        ctx.render(tempRegisterLogged());
-        setTimeout(() => {
-            page.redirect('/')
-        }, 1000);
+        const fd = api.data.getFormData(event.target);
+        console.log(fd);
+
+        //check fields name
+        const email = fd.email.trim();
+        const password = fd.password.trim();
+        const username = fd.username.trim();
+        const repeatPass = fd.repeatPass.trim();
+        const gender = fd.gender;
+
+        if (email == '' || password == '' || username == '' || gender == null) {
+            return note('All fields required');
+        }
+        if (password != repeatPass) {
+            return note('Passwords don\`t match');
+        }
+        try {
+            await api.data.register(username, email, password, gender);
+            //check redirect
+            lp.page.redirect('/catalog');
+        } catch (err) {
+            return note(err.message)
+        }
     }
 }
