@@ -15,29 +15,59 @@ export function getFormData(form) {
 
 
 //===========================================================
-export async function getAllItems() {
-    const data = await (await fetch(host + `data/memes?sortBy=_createdOn%20desc`)).json();
-    let result = [];
-    Object.keys(data).forEach(key => result.push(data[key]));
+
+async function _createReceipt(data) {
+    await api.post(host + `data/entries`, data);
+}
+
+export async function afterLogin() {
+
+    let result = await getAllItems();
+    result = result.find(r => r.active);
+    console.log(result)
+    if (result.length == 0) {
+        result = await _createReceipt({
+            active: true,
+            productCount: 0,
+            total: 0
+        })
+    }
     return result;
 }
-export async function deleteItem(id) {
-    return await api.del(host + 'data/memes/' + id)
+
+export async function getAllItems() {
+    const userId = sessionStorage.getItem('id');
+    const data = await (await fetch(host + `data/receipts`)).json();
+    let result = [];
+    Object.keys(data).forEach(key => result.push(data[key]));
+    result = result.filter(r => r.creator == userId);
+    return result;
+}
+
+export async function getEntriesByReceiptId(id) {
+    console.log(id)
+    const data = await (await fetch(host + `data/entries?query={"receiptId":"${id}"}`)).json();
+    let result = [];
+    Object.keys(data).forEach(key => result.push(data[key]));
+    return result.filter(r => r.receiptId == id);
+}
+
+export async function deleteEntry(id) {
+    console.log(id)
+    return await api.del(host + 'data/entries/' + id)
 }
 
 export async function getItemById(teamId) {
-    return await (await fetch(host + `data/memes/` + teamId)).json();
+    return await (await fetch(host + `data/receipts/` + teamId)).json();
 }
 
-export async function getMyItems(userId) {
-    return await api.get(host + `data/memes?where=_ownerId%3D%22${userId}%22&sortBy=_createdOn%20desc`);
-}
+
 
 export async function editItem(itemId, data) {
     const token = sessionStorage.getItem('token');
     console.log(itemId);
     console.log(data);
-    return await (await fetch(host + `data/memes/${itemId}`, {
+    return await (await fetch(host + `data/receipts/${itemId}`, {
         method: "put",
         headers: {
             "Content-Type": "application/json",
@@ -46,9 +76,9 @@ export async function editItem(itemId, data) {
         body: JSON.stringify(data)
     })).json()
 }
-export async function createItem(data) {
+export async function createEntry(data) {
     const token = sessionStorage.getItem('token');
-    return await (await fetch(host + 'data/memes', {
+    return await (await fetch(host + 'data/entries', {
         method: 'post',
         headers: {
             'Content-Type': 'application/json',

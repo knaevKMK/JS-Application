@@ -8,27 +8,22 @@ import { pageHome } from './views/home.js';
 import { pageCatalog } from './views/catalog.js';
 import { pageCreate } from './views/create.js';
 import { pageDetails } from './views/details.js';
-import { pageEdit } from './views/edit.js';
 import { pageLogin } from './views/login.js';
-import { pageProfile } from './views/profile.js';
 import { pageRegister } from './views/register.js';
 
 //TODO check where to render
-const main = document.querySelector('#notifications');
+const main = document.querySelector('#container');
 
 //home Page +Logout
 lp.page('/index.html', _toDo, pageHome);
 lp.page('/', _toDo, pageHome);
-// Profile Page
-lp.page('/profile', _toDo, pageProfile);
-//Edit Page
-lp.page('/edit/:id', _toDo, pageEdit);
 //Details + Delete
 lp.page('/details/:id', _toDo, pageDetails);
 //Catalog
 lp.page('/catalog', _toDo, pageCatalog);
 //Create
-lp.page('/create', _toDo, pageCreate);
+lp.page('/edit', _toDo, pageCreate);
+lp.page('/edit/:id', _toDo, pageCreate);
 //Register
 lp.page('/register', _toDo, pageRegister);
 //Login

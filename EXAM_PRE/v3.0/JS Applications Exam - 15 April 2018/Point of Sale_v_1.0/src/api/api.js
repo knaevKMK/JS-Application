@@ -58,8 +58,7 @@ function _setSession(response) {
     sessionStorage.setItem('token', response.accessToken);
     sessionStorage.setItem('email', response.email);
     sessionStorage.setItem('id', response._id);
-    sessionStorage.setItem('gender', response.gender);
-    sessionStorage.setItem('username', response.username);
+
 }
 export async function login(email, password) {
 
@@ -68,8 +67,8 @@ export async function login(email, password) {
     return response;
 }
 
-export async function register(username, email, password, gender) {
-    const response = await post(settings.host + 'users/register', { username, email, password, gender });
+export async function register(email, password) {
+    const response = await post(settings.host + 'users/register', { email, password });
     _setSession(response);
     return response;
 }

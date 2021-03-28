@@ -10,28 +10,13 @@ const tempCatalog = (data) => lp.html `
             <div class="col">Total</div>
             <div class="col">Actions</div>
         </div>
-        <div class="row">
-            <div class="col wide">2018-04-15 14:58</div>
-            <div class="col wide">10</div>
-            <div class="col">110.00</div>
-            <div class="col">
-                <a href="#">Details</a>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col wide">2018-04-15 12:33</div>
-            <div class="col wide">15</div>
-            <div class="col">160.50</div>
-            <div class="col">
-                <a href="#">Details</a>
-            </div>
-        </div>
+        ${renderData(data)}
         <div class="table-foot">
             <form id="create-receipt-form">
                 <div class="col wide">
                 </div>
                 <div class="col wide right">Total:</div>
-                <div class="col">270.50</div>
+                <div class="col">${getTotal(data)}</div>
                 <div class="col">
                 </div>
             </form>
@@ -40,14 +25,29 @@ const tempCatalog = (data) => lp.html `
 </section>
 `;
 
+function getTotal(data) {
+    let total = 0;
+    data.forEach(i => total += (i.price * i.qty))
+    return total;
+}
+
 function renderData(data) {
     console.log(data);
     if (data.length == 0) {
         return lp.html ``;
     }
-    return data.map(m => lp.html ``);
+    return data.map(m => lp.html `<div class="row">
+    <div class="col wide">${m.date}</div>
+    <div class="col wide">${m.productCount}</div>
+    <div class="col">${m.total}</div>
+    <div class="col">
+        <a href="/details/${m._id}">Details</a>
+    </div>
+</div>`);
 }
 export async function pageCatalog(ctx) {
+
     const data = await api.data.getAllItems();
+    console.log(data);
     ctx.render(tempCatalog(data));
 }

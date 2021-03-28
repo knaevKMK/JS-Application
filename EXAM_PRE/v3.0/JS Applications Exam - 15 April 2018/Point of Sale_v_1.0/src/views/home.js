@@ -1,6 +1,9 @@
 import { lp } from '../lib.js';
+import { pageLogin } from './login.js';
+import { pageRegister } from './register.js';
 
-const tempHome = () => lp.html `<section class="clearfix" id="welcome-section">
+const tempHome = (pageLogin, pageRegister) => lp.html `
+<section class="clearfix" id="welcome-section">
     <div class="welcome-text">
         <h1>What is Lorem Ipsum?</h1>
         <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -12,36 +15,16 @@ const tempHome = () => lp.html `<section class="clearfix" id="welcome-section">
             PageMaker including versions of Lorem Ipsum.</p>
     </div>
     <div class="welcome-forms">
-        <div class="welcome-login-form">
-            <h1>Sign in</h1>
-            <form id="login-form">
-                <label for="username-login">Username</label>
-                <input type="text" name="username-login" id="username-login" placeholder="Username">
-                <label for="password-login">Password</label>
-                <input type="password" name="password-login" id="password-login" placeholder="Password">
-                <input id="loginBtn" type="submit" value="Login" />
-            </form>
-        </div>
-        <div class="welcome-rigister-form">
-            <h1>Register</h1>
-            <form id="register-form">
-                <label for="username-register">Username</label>
-                <input type="text" name="username-register" id="username-register" placeholder="Username">
-                <label for="password-register">Password</label>
-                <input type="password" name="password-register" id="password-register" placeholder="Password">
-                <label for="password-register-check">Password check</label>
-                <input type="password" name="password-register-check" id="password-register-check"
-                    placeholder="Repeat password">
-                <input id="registerBtn" type="submit" value="Register" />
-            </form>
-        </div>
+
+        ${[pageLogin(), pageRegister()]}
     </div>
 </section>`;
 
 export async function pageHome(ctx) {
     //CHECK if redirect after login
-    // if (sessionStorage.getItem('email') != null) {
-    //     lp.page.redirect('/catalog')
-    // }
-    ctx.render(tempHome());
+    if (sessionStorage.getItem('email') != null) {
+        lp.page.redirect('/catalog');
+        return;
+    }
+    ctx.render(tempHome(pageLogin, pageRegister));
 }
