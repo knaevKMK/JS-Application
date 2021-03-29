@@ -1,0 +1,20 @@
+{
+  "devDependencies": {
+    "lit-html": "^1.3.0",
+    "page": "^1.11.6"
+  },
+  "name": "Chirper-Resources",
+  "version": "1.0.0",
+  "main": "index.js",
+  "dependencies": {
+    "isarray": "^0.0.1",
+    "path-to-regexp": "^1.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
