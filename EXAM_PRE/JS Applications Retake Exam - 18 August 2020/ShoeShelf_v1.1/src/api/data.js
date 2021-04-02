@@ -14,21 +14,23 @@ export function getFormData(form) {
 }
 
 export async function getAllItems() {
-    return await api.get(host + '');
+
+    const result = await api.get(host + '/jsonstore/shoes');
+    return Object.keys(result).map(k => result[k])
 }
-export async function getItemById() {
-    return await api.get(host + '');
+export async function getItemById(id) {
+    return await api.get(host + '/jsonstore/shoes/' + id);
 }
 export async function getMyItems() {
     return await api.get(host + '');
 }
-export async function createItem() {
-    return await api.post(host + '');
+export async function createItem(data) {
+    return await api.post(host + '/jsonstore/shoes', data);
 }
-export async function updateItem() {
-    return await api.put(host + '');
+export async function updateItem(id, data) {
+    return await api.put(host + '/jsonstore/shoes/' + id, data);
 }
 
-export async function deleteItem() {
-    return await api.del(host + '');
+export async function deleteItem(id) {
+    return await api.del(host + '/jsonstore/shoes/' + id);
 }

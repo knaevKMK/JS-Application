@@ -1,6 +1,16 @@
 {
-  "devDependencies": {
-    "lit-html": "^1.3.0",
-    "page": "^1.11.6"
-  }
+  "name": "y",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "page": "^1.11.6",
+    "lit-html": "^1.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
 }
