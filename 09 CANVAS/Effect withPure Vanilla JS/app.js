@@ -1,7 +1,7 @@
 const canvas = document.querySelector('canvas');
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
-canvas.style.background = "rgba(0,0,0,0.1)"
+canvas.style.background = "rgba(0,0,0,1)"
     // window.addEventListener('resize', () => {
     //     canvas.width = window.innerWidth;
     //     canvas.height = window.innerHeight;
@@ -35,7 +35,7 @@ class Figure {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false);
-        ctx.fillStyle = 'red';
+        ctx.fillStyle = 'blue';
         ctx.fill();
     }
 
