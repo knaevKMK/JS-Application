@@ -9,10 +9,16 @@ window.addEventListener('resize', () => {
     canvas.height = window.innerHeight;
 });
 
+
+
+
 const direction = [
-    { d: "right", x: 0, y: 0, src: '/player_right1.png' },
+    { d: "right", x: 0, y: 0, src: '/player_right.png' },
     { d: "left", x: 0, y: 1, src: '/player_left.png' },
 ]
+const bgr = new Image();
+bgr.src = '/back.png';
+
 
 
 class Player {
@@ -48,20 +54,32 @@ class Player {
 
         switch (this.direction) {
             case 'right':
-                this.frameX = this.frameX == 3 ? this.frameX = 1 : this.frameX + 1;
+                this.frameRow();
                 this.x = this.x >= canvas.width ? 0 : this.x + this.speed;
                 break;
             case 'left':
-                this.frameX = this.frameX == 3 ? this.frameX = 1 : this.frameX + 1;
+                this.frameRow(0);
                 this.x = this.x < 0 ? canvas.width : this.x - this.speed;
                 break;
         }
+
         this.draw();
     }
+
+    frameRow() {
+        this.frameX = this.frameX == 3 ? this.frameX = 0 : this.frameX + 1;
+        this.frameY = this.frameX == 3 ?
+            this.frameY < 2 ?
+            this.frameY + 1 : 0 :
+            this.frameY
+    }
 }
+
+
+
 let handle = [
     new Player(0, 0, direction[0]),
-    new Player(canvas.width, 770, direction[1])
+    new Player(canvas.width, 470, direction[1])
 ];
 
 function addHandel() {
@@ -73,10 +91,16 @@ function addHandel() {
 
 function animate() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(
+        bgr,
+        0,
+        0,
+        canvas.width,
+        canvas.height);
     handle.forEach(p => p.update());
     requestAnimationFrame(animate);
 }
 
 setInterval(() => {
     animate()
-}, 1000);
+}, 3000);
